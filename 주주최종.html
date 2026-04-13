@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JUJUTOON</title>
+
+<style>
+body {
+  margin:0;
+  font-family:Arial;
+  background:#f5f5f5;
+  max-width:480px;
+  margin:auto;
+}
+
+/* 헤더 */
+header {
+  background:white;
+  padding:12px;
+  display:flex;
+  justify-content:space-between;
+  border-bottom:1px solid #ddd;
+}
+
+.logo { color:#ff4da6; font-weight:bold; }
+
+/* 메뉴 */
+.menu {
+  display:flex;
+  justify-content:space-around;
+  padding:10px;
+  background:white;
+}
+
+.menu span {
+  cursor:pointer;
+  color:gray;
+}
+
+.active {
+  color:#ff4da6;
+  font-weight:bold;
+}
+
+/* 페이지 */
+.page { display:none; }
+.page.active { display:block; }
+
+/* 🎬 배너 */
+.banner {
+  position:relative;
+  overflow:hidden;
+  padding:10px;
+}
+
+.slides {
+  display:flex;
+  transition:0.5s;
+}
+
+.slide { min-width:100%; }
+
+.slide img {
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  border-radius:15px;
+}
+
+/* 화살표 */
+.prev, .next {
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(0,0,0,0.3);
+  color:white;
+  border:none;
+  padding:10px;
+  cursor:pointer;
+  border-radius:50%;
+  opacity:0;
+  transition:0.3s;
+}
+
+.prev { left:15px; }
+.next { right:15px; }
+
+.banner:hover .prev,
+.banner:hover .next {
+  opacity:1;
+}
+
+/* 점 */
+.dots { text-align:center; margin-top:5px; }
+
+.dot {
+  display:inline-block;
+  width:8px;
+  height:8px;
+  background:#ccc;
+  border-radius:50%;
+  margin:3px;
+}
+
+.dot.active { background:#ff4da6; }
+
+/* 요일 */
+.days {
+  display:flex;
+  justify-content:space-around;
+  background:white;
+  padding:10px;
+}
+
+/* 카드 */
+.container {
+  padding:10px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.card {
+  background:white;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.card img {
+  width:100%;
+  aspect-ratio:3/4;
+  object-fit:cover;
+}
+
+.info { padding:8px; }
+.small { font-size:12px; color:gray; }
+.popup {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.5);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+}
+
+.popup-content {
+  background:white;
+  padding:15px;
+  border-radius:10px;
+  text-align:center;
+  position:relative;
+  width:80%;
+  max-width:300px;
+}
+
+.popup img {
+  width:100%;
+  border-radius:10px;
+}
+
+.close {
+  position:absolute;
+  top:10px;
+  right:10px;
+  font-size:20px;
+  cursor:pointer;
+}
+.ranking-container {
+  padding:15px;
+}
+
+.writer {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:white;
+  padding:10px;
+  border-radius:10px;
+  margin-bottom:10px;
+}
+
+.writer img {
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  object-fit:cover;
+}
+.full-img img {
+  width:100%;
+  display:block;
+}
+
+.days span.active {
+  background:#ffe6f0;
+  padding:1px 1px;
+  border-radius:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">JUJUTOON</div>
+  <div>🔍 👤</div>
+</header>
+
+<div class="menu">
+  <span class="tab active" data-page="home">홈</span>
+  <span class="tab" data-page="series">연재</span>
+  <span class="tab" data-page="ranking">작가의 말</span>
+</div>
+
+<!-- 홈 -->
+
+<div id="popup" class="popup">
+    <div class="popup-content">
+  
+      <!-- ❌ 닫기 버튼 -->
+      <span class="close">&times;</span>
+  
+      <!-- 🎁 쿠폰 이미지 -->
+      <img src="https://raw.github.com/leedachsu/juju-toon/main/c.jpeg"> <!-- (닥수가수정) -->
+  
+    </div>
+  </div>
+ 
+
+<div class="page active" id="home">
+  <div class="banner">
+    <div class="slides" id="slides">
+       <div class="slide"><img src="https://raw.github.com/leedachsu/juju-toon/main/b1.jpeg"></div>
+      <div class="slide"><img src="https://raw.github.com/leedachsu/juju-toon/main/b2.jpeg"></div>
+      <div class="slide"><img src="https://raw.github.com/leedachsu/juju-toon/main/b33.png"></div>
+    </div>
+    <button class="prev">❮</button>
+    <button class="next">❯</button>
+    <div class="dots" id="dots"></div>
+  </div>
+</div>
+
+<div class="page active" id="home">
+
+    <div class="banner">
+      ...
+    </div>
+  
+    <!-- 👇 여기 넣기 -->
+    <div class="full-img">
+      <img src="https://raw.github.com/leedachsu/juju-toon/main/wedding.jpeg">
+    </div>
+  
+  </div>
+<!-- 연재 -->
+<div class="page" id="series">
+
+  <!-- 요일 -->
+  <div class="days">
+    <span data-day="월" class="active">월</span>
+    <span data-day="화">화</span>
+    <span data-day="수">수</span>
+    <span data-day="목">목</span>
+    <span data-day="금">금</span>
+  </div>
+
+  <div class="container">
+
+    <!-- 월 -->
+    <div class="card" data-day="월" data-preview="https://raw.github.com/leedachsu/juju-toon/main/mm1.png">
+        <img src="https://raw.github.com/leedachsu/juju-toon/main/m1.jpeg"> <!-- (닥수가수정) -->
+      
+        <div class="info">
+          <div>물가의 펄</div>
+      
+          <div class="small">작가:룽바오</div>
+      
+          <div class="small">
+            조회수: <span class="view">2005</span>
+          </div>
+      
+          <div class="like">❤️ <span>414</span></div>
+        </div>
+      </div>
+      <div class="card" data-day="월" data-preview="https://raw.github.com/leedachsu/juju-toon/main/mm2.jpeg" >
+        <img src="https://raw.github.com/leedachsu/juju-toon/main/m2.jpeg"> <!-- (닥수가수정) -->
+      
+        <div class="info">
+          <div>펄케치</div>
+      
+          <div class="small">작가:인양이</div>
+      
+          <div class="small">
+            조회수: <span class="view">2005</span>
+          </div>
+      
+          <div class="like">❤️ <span>414</span></div>
+        </div>
+      </div>
+
+    <!-- 화 -->
+    <div class="card" data-day="화" data-preview="https://raw.github.com/leedachsu/juju-toon/main/tuu2.jpeg">
+        <img src="https://raw.github.com/leedachsu/juju-toon/main/tu1.jpeg"> <!-- (닥수가수정) -->
+      
+        <div class="info">
+          <div>진주소년</div>
+      
+          <div class="small">작가:이닥수</div>
+      
+          <div class="small">
+            조회수: <span class="view">2005</span>
+          </div>
+      
+          <div class="like">❤️ <span>414</span></div>
+        </div>
+      </div>
+      <div class="card" data-day="화" data-preview="https://raw.github.com/leedachsu/juju-toon/main/tuu1.png"> 
+        <img src="https://raw.github.com/leedachsu/juju-toon/main/tu2.jpeg"> <!-- (닥수가수정) -->
+      
+        <div class="info">
+          <div>원룸 진주님</div>
+      
+          <div class="small">작가:룽바오</div>
+      
+          <div class="small">
+            조회수: <span class="view">2005</span>
+          </div>
+      
+          <div class="like">❤️ <span>414</span></div>
+        </div>
+      </div>
+
+      <!-- 수 -->
+    <div class="card" data-day="수" data-preview="https://raw.github.com/leedachsu/juju-toon/main/ww1.png">
+        <img src="https://raw.github.com/leedachsu/juju-toon/main/w1.jpeg"> <!-- (닥수가수정) -->
+      
+        <div class="info">
+          <div>월요일의 최진주</div>
+      
+          <div class="small">작가:중덕스</div>
+      
+          <div class="small">
+            조회수: <span class="view">2005</span>
+          </div>
+      
+          <div class="like">❤️ <span>414</span></div>
+        </div>
+      </div>
+      <div class="card" data-day="수" data-preview="https://raw.github.com/leedachsu/juju-toon/main/ww2.png">
+        <img src="https://raw.github.com/leedachsu/juju-toon/main/w2.jpeg"> <!-- (닥수가수정) -->
+      
+        <div class="info">
+          <div>펄화첩</div>
+      
+          <div class="small">작가:맹야지치</div>
+      
+          <div class="small">
+            조회수: <span class="view">2005</span>
+          </div>
+      
+          <div class="like">❤️ <span>414</span></div>
+        </div>
+      </div>
+
+   <!-- 목 -->
+   <div class="card" data-day="목" data-preview="https://raw.github.com/leedachsu/juju-toon/main/tuu1.jpeg">
+    <img src="https://raw.github.com/leedachsu/juju-toon/main/th1.jpeg"> <!-- (닥수가수정) -->
+  
+    <div class="info">
+      <div>해피펄게더</div>
+  
+      <div class="small">작가:이닥수</div>
+  
+      <div class="small">
+        조회수: <span class="view">2005</span>
+      </div>
+  
+      <div class="like">❤️ <span>414</span></div>
+    </div>
+  </div>
+  <div class="card" data-day="목" data-preview="https://raw.github.com/leedachsu/juju-toon/main/thh2.png">
+    <img src="https://raw.github.com/leedachsu/juju-toon/main/th2.jpeg"> <!-- (닥수가수정) -->
+  
+    <div class="info">
+      <div>펄라메 강림하여 주소서</div>
+  
+      <div class="small">작가:맹야지치</div>
+  
+      <div class="small">
+        조회수: <span class="view">2005</span>
+      </div>
+  
+      <div class="like">❤️ <span>414</span></div>
+    </div>
+  </div>
+
+    <!-- 금 -->
+    <div class="card" data-day="금" data-preview="https://raw.github.com/leedachsu/juju-toon/main/ff1.png">
+        <img src="https://raw.github.com/leedachsu/juju-toon/main/f1.jpeg"> <!-- (닥수가수정) -->
+      
+        <div class="info">
+          <div>진크스</div>
+      
+          <div class="small">작가:중덕스</div>
+      
+          <div class="small">
+            조회수: <span class="view">2005</span>
+          </div>
+        
+          <div class="like">❤️ <span>414</span></div>
+        </div>
+      </div>
+      <div class="card" data-day="금" data-preview="https://raw.github.com/leedachsu/juju-toon/main/ff2.jpeg">
+        <img src="https://raw.github.com/leedachsu/juju-toon/main/f2.jpeg"> <!-- (닥수가수정) -->
+      
+        <div class="info">
+          <div>리미티드펄</div>
+      
+          <div class="small">작가:인양이</div>
+      
+          <div class="small">
+            조회수: <span class="view">2005</span>
+          </div>
+      
+          <div class="like">❤️ <span>414</span></div>
+        </div>
+      </div>
+
+  </div>
+</div>
+
+<!-- 랭킹 -->
+<div class="page" id="ranking">
+
+    <div class="ranking-container">
+  
+      <div class="writer">
+        <img src="https://raw.github.com/leedachsu/juju-toon/main/mell.jpeg">
+        <div>중덕스 작가님의 한마디 : <br><br>
+            진주야 생일 축하한다르르🦖
+            사실 나는 챗지피티인데… 중덕스가 자러 가버려서 대신 왔다르르😴
+            그래도 마음만큼은 중덕스랑 똑같이 담아서 축하한다르르!!
+            오늘 완전 행복하게 보내고 맛있는 거 많이 먹는다르르🎂🎉</div>
+      </div>
+  
+      <div class="writer">
+        <img src="https://raw.github.com/leedachsu/juju-toon/main/in.jpeg">
+        <div>인양이 작가님의 한마디: 
+            <br><br>
+
+            진주야 생일축하한다~~!!!
+            너 없었으면 진짜 
+            너무너무너무많이 힘들었을것같애 너덕분에 버틸수있었다 
+            진심으로…뜬금없지만 저랑 친구해줘서 고마워요:——)
+            오늘 맛있는거 많이 먹고 세상에서 가장 행복한 
+            사람이길~~지성이랑 좋은시간보내길ㅎㅎ💚💚💚💚💚💚💚</div>
+      </div>
+  
+      <div class="writer">
+        <img src="https://raw.github.com/leedachsu/juju-toon/main/roong.jpeg">
+        <div>룽바오 작가님의 한마디: <br><br>
+
+            진주 생일축하해😁😁😁🤩🤩🤩 생일 버프 받고 앞으로
+             올 한 해 모든 일이 잘 되길 바라🫰🍀 우리의 해커 닥수가 뺑이를 많이 쳐줬어! 
+             우리는 제미나이뺑이 침ㅎㅎ 행복한 하루 보내세요 독자님^^ps. 나 아직도 진주위치 너무 맛있어서 종종 그리워함... 
+             전남친토스트가 왜 태어났는지 알겠음...</div>
+      </div>
+  
+      <div class="writer">
+        <img src="https://raw.github.com/leedachsu/juju-toon/main/dach.jpeg">
+        <div>이닥수님 작가님의 한마디: <br><br> 주주 ~~~ 생일축하한다주 !!!!!!! 우리 앞으로도 영원히 4월즈하고 저능하게 재밌게 웃기만하고 놀자
+            놀자 놀자 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ 앙 !!!! 
+        </div>
+      </div>
+  
+      <div class="writer">
+        <img src="https://raw.github.com/leedachsu/juju-toon/main/maeng.jpeg">
+        <div>맹야지치 작가님의 한마디: <br><br> 진주님 정말 생일추카합니다💕💕
+            너랑 친구여서 정말 참 좋으다..!!😁😁 앞으로 계속 쭈욱 이렇게 지내고 싶네 
+            무튼 생일 너무너무 축하하고 너의 남자들과 즐거운 시간 보내고 맛있는것도 많이 먹고!!!!! 어깨펴고!!!!! 오늘의 주인공은 너니까🫵🫵🫵
+            생일추카해💕 아랑한다😁😁🤩🤩</div>
+      </div>
+  
+      <div class="writer">
+        <img src="https://raw.github.com/leedachsu/juju-toon/main/bok.jpeg">
+        <div>오복순 PD님의 한마디: <br><br>
+
+            야화첩, 징크스 레진. 봄툰이면 물가의 밤, 스케치. 
+            원룸조교님도잇는데이거진주가안보는것같고 월요일의 구원자 봄툰이엇던거같은데 이거 진주가 봄. </div>
+      </div>
+  
+      <div class="writer">
+        <img src="https://raw.github.com/leedachsu/juju-toon/main/sea.jpeg">
+        <div>전씨아 독자님의 한마디: <br><br>
+        ... </div>
+      </div>
+  
+    </div>
+  
+  </div>
+
+  <div id="previewPopup" style="
+  display:none;
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.8);
+  z-index:9999;
+  justify-content:center;
+  align-items:center;
+">
+
+  <span id="closePreview" style="
+    position:absolute;
+    top:20px;
+    right:20px;
+    color:white;
+    font-size:30px;
+    cursor:pointer;
+  ">&times;</span>
+
+  <img id="previewImg" style="
+    width:90%;
+    max-height:90%;
+    object-fit:contain;
+  ">
+</div>
+<script>
+
+// 탭 전환
+document.querySelectorAll(".tab").forEach(tab=>{
+  tab.onclick=()=>{
+    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+    tab.classList.add("active");
+
+    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+    document.getElementById(tab.dataset.page).classList.add("active");
+  }
+});
+
+// 🎬 슬라이드
+let index=0;
+const slides=document.getElementById("slides");
+const total=document.querySelectorAll(".slide").length;
+const dotsContainer=document.getElementById("dots");
+
+for(let i=0;i<total;i++){
+  let dot=document.createElement("span");
+  dot.classList.add("dot");
+  if(i===0) dot.classList.add("active");
+  dotsContainer.appendChild(dot);
+}
+
+const dots=document.querySelectorAll(".dot");
+
+function showSlide(i){
+  slides.style.transform=`translateX(-${i*100}%)`;
+  dots.forEach(d=>d.classList.remove("active"));
+  dots[i].classList.add("active");
+}
+
+let autoSlide=setInterval(nextSlide,3000);
+
+function nextSlide(){
+  index=(index+1)%total;
+  showSlide(index);
+}
+
+function stopAuto(){
+  clearInterval(autoSlide);
+}
+
+document.querySelector(".next").onclick=()=>{
+  stopAuto();
+  nextSlide();
+};
+
+document.querySelector(".prev").onclick=()=>{
+  stopAuto();
+  index=(index-1+total)%total;
+  showSlide(index);
+};
+
+// 👉 요일 필터
+const days=document.querySelectorAll(".days span");
+const cards=document.querySelectorAll(".card");
+
+days.forEach(day=>{
+  day.onclick=()=>{
+
+    // 👉 기존 active 제거
+    days.forEach(d=>d.classList.remove("active"));
+
+    // 👉 클릭한 애만 active 추가
+    day.classList.add("active");
+
+    const selected = day.dataset.day;
+
+    cards.forEach(card=>{
+      card.style.display =
+        card.dataset.day === selected ? "block" : "none";
+    });
+
+  }
+});
+
+// 👉 처음은 월요일
+window.onload=()=>{
+  document.querySelector('.days span[data-day="월"]').click();
+};
+
+
+/* 기존 코드 */
+
+// 👇 맨 아래 추가
+document.querySelector(".close").onclick = () => {
+  document.getElementById("popup").style.display = "none";
+};
+const previewPopup = document.getElementById("previewPopup");
+const previewImg = document.getElementById("previewImg");
+
+document.querySelectorAll(".card").forEach(card => {
+  card.onclick = () => {
+    const img = card.dataset.preview;
+    if (!img) return;
+
+    previewImg.src = img;
+    previewPopup.style.display = "flex";
+  };
+});
+
+document.getElementById("closePreview").onclick = () => {
+  
+};
+</script>
+
+</body>
+</html>
